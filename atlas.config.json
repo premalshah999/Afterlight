@@ -119,14 +119,9 @@
             "selector": ".check-row:nth-of-type(1)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",
@@ -153,14 +148,9 @@
             "selector": ".check-row:nth-of-type(2)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",
@@ -187,14 +177,9 @@
             "selector": ".check-row:nth-of-type(3)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",
@@ -221,14 +206,9 @@
             "selector": ".check-row:nth-of-type(4)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",
@@ -255,14 +235,9 @@
             "selector": ".check-row:nth-of-type(5)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",
@@ -289,14 +264,9 @@
             "selector": ".check-row:nth-of-type(6)"
           },
           {
-            "action": "press",
+            "action": "select",
             "selector": "select[name=\"status\"]",
-            "key": "End"
-          },
-          {
-            "action": "press",
-            "selector": "select[name=\"status\"]",
-            "key": "Enter"
+            "value": "done"
           },
           {
             "action": "fill",

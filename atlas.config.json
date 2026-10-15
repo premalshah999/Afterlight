@@ -1,0 +1,378 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "name": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "required": true,
+      "timeoutSec": 120
+    },
+    {
+      "name": "syntax",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "required": true,
+      "timeoutSec": 60
+    }
+  ],
+  "app": {
+    "start": [
+      "node",
+      "server.js"
+    ],
+    "readyPath": "/healthz",
+    "readyTimeoutSec": 30
+  },
+  "api": [
+    {
+      "name": "health",
+      "path": "/healthz",
+      "expectStatus": 200,
+      "bodyIncludes": "afterlight"
+    },
+    {
+      "name": "workspace",
+      "path": "/api/releases",
+      "expectStatus": 200,
+      "bodyIncludes": "\"schema\":1"
+    },
+    {
+      "name": "cross-origin-denied",
+      "method": "POST",
+      "path": "/api/releases",
+      "headers": {
+        "Content-Type": "application/json",
+        "Origin": "https://untrusted.example"
+      },
+      "body": "{}",
+      "expectStatus": 403,
+      "bodyIncludes": "refused"
+    }
+  ],
+  "browser": {
+    "failOnConsoleErrors": true,
+    "flows": [
+      {
+        "name": "full-launch-lifecycle",
+        "steps": [
+          {
+            "action": "goto",
+            "path": "/"
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "New launch"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"title\"]",
+            "value": "ATLAS verified release"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"description\"]",
+            "value": "Created and exercised by the ATLAS browser verification stage."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Create launch room"
+          },
+          {
+            "action": "expectText",
+            "selector": ".detail-heading h1",
+            "text": "ATLAS verified release"
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Review launch"
+          },
+          {
+            "action": "expectText",
+            "selector": "dialog h2",
+            "text": "A little more before liftoff."
+          },
+          {
+            "action": "screenshot",
+            "name": "launch-correctly-blocked"
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Back to the room"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(1)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(2)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(3)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(4)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(5)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "selector": ".check-row:nth-of-type(6)"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "End"
+          },
+          {
+            "action": "press",
+            "selector": "select[name=\"status\"]",
+            "key": "Enter"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"owner\"]",
+            "value": "Premal Shah"
+          },
+          {
+            "action": "fill",
+            "selector": "input[name=\"evidence\"]",
+            "value": "https://github.com/premalshah999/ATLAS-Cloudflare"
+          },
+          {
+            "action": "fill",
+            "selector": "textarea[name=\"note\"]",
+            "value": "ATLAS browser journey: test reference, not external evidence verification."
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Save check"
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Review launch"
+          },
+          {
+            "action": "expectText",
+            "selector": "dialog h2",
+            "text": "Your moment. Your green light."
+          },
+          {
+            "action": "click",
+            "selector": "#ship-form input[type=\"checkbox\"]"
+          },
+          {
+            "action": "click",
+            "role": "button",
+            "name": "Approve & launch"
+          },
+          {
+            "action": "expectText",
+            "selector": ".detail-actions",
+            "text": "Decision locked"
+          },
+          {
+            "action": "screenshot",
+            "name": "verified-locked-launch"
+          },
+          {
+            "action": "goto",
+            "path": "/"
+          },
+          {
+            "action": "click",
+            "selector": ".launch-card"
+          },
+          {
+            "action": "expectText",
+            "selector": ".detail-actions",
+            "text": "Decision locked"
+          },
+          {
+            "action": "screenshot",
+            "name": "persisted-launch-record"
+          }
+        ]
+      }
+    ]
+  },
+  "deploy": {
+    "target": "afterlight-staging",
+    "provider": "local",
+    "versionPath": "/version",
+    "readyPath": "/healthz",
+    "syntheticRequests": 20,
+    "latencyP95Ms": 1500
+  }
+}

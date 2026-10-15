@@ -1,0 +1,7 @@
+.afterlight/
+.wrangler/
+.dev.vars*
+node_modules/
+test-results/
+*.log
+.DS_Store

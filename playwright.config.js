@@ -1,0 +1,2 @@
+import { defineConfig } from '@playwright/test';
+export default defineConfig({ testDir: './test/browser', workers: 1, reporter: 'list', use: { baseURL: 'http://127.0.0.1:4399', screenshot: 'only-on-failure', trace: 'retain-on-failure' }, webServer: { command: 'node server.js', url: 'http://127.0.0.1:4399/healthz', env: { PORT: '4399', AFTERLIGHT_DATA: `.afterlight/browser-${Date.now()}.json` }, reuseExistingServer: false }, outputDir: 'test-results/browser' });

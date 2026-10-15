@@ -1,0 +1,56 @@
+import { test, expect } from '@playwright/test';
+test('real launch: create, reject missing proof, attach evidence, approve, persist, lock and export',async({page,request})=>{
+ await page.goto('/');
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.getByRole('button',{name:'New launch',exact:true}).click();
+ await page.getByLabel('Release name',{exact:true}).fill('Afterlight · Verified pilot');
+ await page.getByLabel('Launch owner',{exact:true}).fill('Premal Shah');
+ await page.getByLabel('A little context').fill('Verify the full workflow with actual evidence and a locked launch record.');
+ await page.getByRole('button',{name:'Create launch room'}).click();
+ await expect(page.getByRole('heading',{name:'Afterlight · Verified pilot'})).toBeVisible();
+ await page.getByRole('button',{name:'Review launch',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'A little more before liftoff.'})).toBeVisible();
+ await page.getByRole('button',{name:'Back to the room'}).click();
+ await page.locator('.check-row').first().click();
+ await page.getByLabel('Status',{exact:true}).selectOption('done');
+ await page.getByRole('button',{name:'Save check'}).click();
+ await expect(page.locator('.form-error')).toContainText('Attach evidence');
+ await page.getByRole('button',{name:'Close dialog'}).click();
+ const rows=await page.locator('.check-row').count();
+ for(let i=0;i<rows;i++){
+  await page.locator('.check-row').nth(i).click();
+  await page.getByLabel('Status',{exact:true}).selectOption('done');
+  await page.getByLabel('Check owner',{exact:true}).fill('Premal Shah');
+  await page.getByLabel('Evidence URL').fill('https://github.com/premalshah999/ATLAS-Cloudflare');
+  await page.getByLabel('Notes',{exact:true}).fill('Browser test evidence link; not a claim of external CI verification.');
+  await page.getByRole('button',{name:'Save check'}).click();
+  await expect(page.locator('dialog[open]')).toHaveCount(0);
+ }
+ await page.getByRole('button',{name:'Review launch',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Your moment. Your green light.'})).toBeVisible();
+ await page.getByRole('checkbox').check();
+ await page.getByRole('button',{name:'Approve & launch'}).click();
+ await expect(page.getByText('Decision locked',{exact:true})).toBeVisible();
+ await page.reload();
+ await page.getByRole('button',{name:/Afterlight · Verified pilot/}).first().click();
+ await expect(page.getByText('Decision locked',{exact:true})).toBeVisible();
+ await page.locator('.check-row').first().click();
+ await expect(page.getByLabel('Status',{exact:true})).toBeDisabled();
+ await page.getByRole('button',{name:'Close dialog'}).click();
+ const downloaded=page.waitForEvent('download');await page.getByRole('button',{name:'Export record'}).click();
+ const download=await downloaded;expect(download.suggestedFilename()).toMatch(/afterlight.*\.json$/);
+ await page.screenshot({path:'test-results/afterlight-shipped.png',fullPage:true});
+ const state=await(await request.get('/api/releases')).json();const release=state.releases.find(r=>r.title==='Afterlight · Verified pilot');
+ expect(release.shipment.checks).toHaveLength(6);
+ const locked=await request.patch(`/api/releases/${release.id}`,{data:{version:release.version,action:'add',title:'Late change'}});expect(locked.status()).toBe(409);
+ expect(errors).toEqual([]);
+});
+test('mobile navigation, keyboard entry and untrusted text render safely',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/');
+ await page.keyboard.press('n');await page.getByLabel('Release name',{exact:true}).fill('<img src=x onerror=alert(1)>');await page.getByLabel('Launch owner',{exact:true}).fill('Premal');
+ await page.getByRole('button',{name:'Create launch room'}).click();
+ await expect(page.getByRole('heading',{name:'<img src=x onerror=alert(1)>'})).toBeVisible();
+ expect(await page.locator('.page img').count()).toBe(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+ await page.screenshot({path:'test-results/afterlight-mobile.png',fullPage:true});
+});

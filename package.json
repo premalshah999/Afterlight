@@ -1,0 +1,11 @@
+{
+  "name": "afterlight",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "type": "module",
+  "description": "A launch room that turns release readiness into a decision backed by evidence.",
+  "scripts": { "start": "node server.js", "test": "node --test test/*.test.js", "check": "node --check server.js && node --check public/app.js", "test:browser": "playwright test", "deploy": "wrangler deploy" },
+  "engines": { "node": ">=22.19" },
+  "devDependencies": { "@playwright/test": "1.56.1", "wrangler": "4.145.0" }
+}
